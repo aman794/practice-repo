@@ -1,1 +1,12 @@
-abc
+apiVersion: v1
+kind: Service
+metadata:
+  name: practice-service
+spec:
+  selector:
+    app: nginx           # Matches the label on your Pods
+  ports:
+    - protocol: TCP
+      port: 80            # The port the service exposes
+      targetPort: 80    # The port the application is listening on in the container
+  type: ClusterIP         # Options: ClusterIP, NodePort, LoadBalancer
