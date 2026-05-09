@@ -1,0 +1,6 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane # This node manages the cluster
+- role: worker        # This node runs your applications
+- role: worker        # A second worker for high availability
