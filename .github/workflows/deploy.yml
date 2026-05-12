@@ -29,6 +29,9 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: Set up Kubeconfig
         run: |
           mkdir -p ~/.kube
