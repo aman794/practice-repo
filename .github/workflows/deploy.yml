@@ -36,4 +36,4 @@ jobs:
 
       - name: Deploy New Version
         run: |
-          kubectl apply -f deployment/deploylinux
+          kubectl apply -f deploylinux
