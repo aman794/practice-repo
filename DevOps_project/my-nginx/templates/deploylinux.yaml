@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploylinux  # Must match the name in your GitHub Action command
+  labels:
+    app: practice-app
+spec:
+  replicas: 2                # Runs two copies for reliability
+  selector:
+    matchLabels:
+      app: practice-app      # This tells the Deployment which pods to manage
+  template:
+    metadata:
+      labels:
+        app: practice-app    # This label MUST match the Service selector below
+    spec:
+      containers:
+      - name: my-app
+        image: 898371/practice-app:latest
+        imagePullPolicy: Always # Forces K8s to download the new image from Docker Hub
+        ports:
+        - containerPort: 8080 # Must match the EXPOSE port in your Dockerfile
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: linux-service     # The internal "phone number" for your pods
+spec:
+  type: ClusterIP            # Internal only (Ingress will handle external traffic)
+  selector:
+    app: practice-app        # Connects the service to the pods above
+  ports:
+    - protocol: TCP
+      port: 80               # Port the Service listens on
+      targetPort: 8080       # Port the App (Container) listens on
