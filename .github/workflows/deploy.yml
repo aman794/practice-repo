@@ -36,10 +36,7 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-
-      - name: List files for debugging
-        run: |
-          ls -R
+          
       - name: Deploy New Version
         run: |
           kubectl apply -f my-nginx/templates/deploylinux.yaml
