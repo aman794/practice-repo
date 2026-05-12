@@ -2,8 +2,9 @@ name: Build and Deploy to K8s
 
 on:
   push:
-    branches: [ "main" ] # Triggers only on push to main
-
+    branches:
+      - main
+      
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
