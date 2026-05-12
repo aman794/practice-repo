@@ -1,6 +1,0 @@
-dataname:
-  name: "practice-service"
-
-deploy:
-  name: "practice-deployment"
-
