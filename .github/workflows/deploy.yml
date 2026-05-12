@@ -36,4 +36,4 @@ jobs:
 
       - name: Deploy New Version
         run: |
-          kubectl apply -f deploylinux
+          kubectl apply -f my-nginx/templates/deploylinux.yaml
