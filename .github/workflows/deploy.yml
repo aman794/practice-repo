@@ -33,9 +33,10 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Set up Kubeconfig
+        shell: bash
         run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+           mkdir -p ~/.kube
+           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
           
       - name: Deploy New Version
         run: |
