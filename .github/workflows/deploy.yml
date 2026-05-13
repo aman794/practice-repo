@@ -42,6 +42,11 @@ jobs:
           "@
           Set-Content -Path "$HOME\.kube\config" -Value $KubeConfig -Encoding utf8
           
-      - name: Deploy New Version
+   #   - name: Deploy New Version
+   #     run: |
+   #       kubectl apply -f my-nginx/templates/deploylinux.yaml
+
+
+      - name: Deploy Demo App
         run: |
-          kubectl apply -f my-nginx/templates/deploylinux.yaml
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/service/networking/run-my-nginx.yaml
