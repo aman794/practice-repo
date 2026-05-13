@@ -33,10 +33,14 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Set up Kubeconfig
-        shell: bash
         run: |
-           mkdir -p ~/.kube
-           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+          if (!(Test-Path "$HOME\.kube")) {
+          New-Item -Path "$HOME\.kube" -ItemType Directory -Force
+          }
+          $KubeConfig = @"
+          ${{ secrets.KUBECONFIG }}
+          "@
+          Set-Content -Path "$HOME\.kube\config" -Value $KubeConfig -Encoding utf8
           
       - name: Deploy New Version
         run: |
