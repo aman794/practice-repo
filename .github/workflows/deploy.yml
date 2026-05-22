@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-      
+#      
 jobs:
   build-and-push:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,9 +34,19 @@ jobs:
         
       - name: Set up Kubeconfig
         run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+          if (!(Test-Path "$HOME\.kube")) {
+          New-Item -Path "$HOME\.kube" -ItemType Directory -Force
+          }
+          $KubeConfig = @"
+          ${{ secrets.KUBECONFIG }}
+          "@
+          Set-Content -Path "$HOME\.kube\config" -Value $KubeConfig -Encoding utf8
           
-      - name: Deploy New Version
+   #   - name: Deploy New Version
+   #     run: |
+   #       kubectl apply -f my-nginx/templates/deploylinux.yaml
+
+
+      - name: Deploy Demo App
         run: |
-          kubectl apply -f my-nginx/templates/deploylinux.yaml
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/service/networking/run-my-nginx.yaml
