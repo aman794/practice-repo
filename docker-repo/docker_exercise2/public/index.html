@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactive Docker Monitor</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5); width: 350px; text-align: center; }
+        h1 { color: #38bdf8; margin-top: 0; }
+        .metric { margin: 1.5rem 0; font-size: 1.2rem; }
+        .value { font-size: 2rem; font-weight: bold; color: #4ade80; display: block; margin-top: 0.5rem; transition: all 0.3s ease; }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="card">
+        <h1>Container Monitor</h1>
+        <hr style="border-color: #334155;">
+        <div class="metric">
+            Memory Usage
+            <span id="memory" class="value">0%</span>
+        </div>
+        <div class="metric">
+            System Uptime
+            <span id="uptime" class="value">0s</span>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+
+        // Reactively update the UI when data arrives from the server
+        socket.on('metricsUpdate', (data) => {
+            document.getElementById('memory').innerText = data.memoryUsage + '%';
+            document.getElementById('uptime').innerText = data.uptime + 's';
+        });
+    </script>
+</body>
+</html>
